@@ -1,0 +1,89 @@
+#map{
+    width:650px;
+    height:600px;
+    border:1px solid red;
+}
+
+.tooltip {
+    background-color: lightgrey;
+    position: absolute;
+    padding: 10px;
+    margin-top: 20px;
+    margin-left: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    float: left;
+}
+
+
+.tooltipTitle {
+    font-size: 18px;
+}
+
+.tooltipValue {
+    font-size: 12px;
+}
+
+.popup {
+    background-color: white;
+    margin: 5px;
+    height: 55%;
+    width: 35%;
+    left: 5%;
+    top: 15%;
+    border-radius: 15px;
+    position: absolute;
+    -webkit-box-shadow: 10px 10px 47px 0px rgba(0, 0, 0, 0.29);
+    -moz-box-shadow: 10px 10px 47px 0px rgba(0, 0, 0, 0.29);
+    box-shadow: 10px 10px 47px 0px rgba(0, 0, 0, 0.29);
+}
+
+
+h3{
+    width:50%;
+}
+#popupTitle{
+    display:inline;
+}
+#popupWrapper {
+    position: relative;
+    padding: 40px;
+}
+
+#popUpClose {
+
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: 20px;
+    right: 20px;
+}
+
+#popUpClose:hover {
+    background: #f4f4f4;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+#popupBody {
+    height: 80%;
+    width: 90%;
+    margin-left: 36px;
+    margin-top: 68px;
+    border-radius: 15px;
+}
+
+#popupContent {
+    text-align: justify;
+}
+
+.brown {
+    fill: #f37735;
+    cursor: pointer;
+}
+
+.white{
+    fill:#fff;
+    pointer-events: none;
+}
