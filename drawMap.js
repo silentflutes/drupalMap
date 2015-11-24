@@ -18,7 +18,7 @@ function createMap(nepal) {
 
             //class to make it responsive
             .classed("svg-content-responsive", true)
-           // .attr("style", "border: 1px solid red;")
+    // .attr("style", "border: 1px solid red;")
         ;
 
     var group = canvas.selectAll("g")
@@ -32,54 +32,53 @@ function createMap(nepal) {
 
     //plotting map
     var plotDistricts = group.append("path")
-        .attr("d", geoPath)
-        .attr("fill","white")
-        //.attr("class", "brown")
-        .attr("stroke", "#000")
-        //.attr("fill","white")
-        .attr("stroke-width", "1px")
-        .attr("district",function(d){
-            return d.properties.DISTRICT;
-        })
-        .on("mouseover", mouseover)
-        .on("mousemove", mousemove)
-        .on("mouseout", mouseout)
-        .on("click", mouseclick)
+            .attr("d", geoPath)
+            .attr("fill", "white")
+            //.attr("class", "brown")
+            .attr("stroke", "#000")
+            //.attr("fill","white")
+            .attr("stroke-width", "1px")
+            .attr("district", function (d) {
+                return d.properties.DISTRICT;
+            })
+            .on("mouseover", mouseover)
+            .on("mousemove", mousemove)
+            .on("mouseout", mouseout)
+            .on("click", mouseclick)
         ;
 
 
-            d3.json("data/data.json", getList);
-            function getList(data){
+    d3.json("data/data.json", getList);
+    function getList(data) {
 
-                var result = data.map(function (d) {
-                    //console.log(d);
-                    //console.log(districtName);
-                    return d["district-name"] ;
-                });
+        var result = data.map(function (d) {
+            //console.log(d);
+            //console.log(districtName);
+            return d["district-name"];
+        });
 
-                d3.selectAll("path").each(function(district){
-                    //to get the pointer of this district
-                    var value = d3.select(this);
-                    //console.log(value.attr("district"));
-                var districtNameMap=value.attr("district").toString();
-                     districtNameMap= districtNameMap.charAt(0).toUpperCase()+
-                        districtNameMap.slice(1).toLowerCase();
-                var compareResult =result.indexOf(districtNameMap);
+        d3.selectAll("path").each(function (district) {
+            //to get the pointer of this district
+            var value = d3.select(this);
+            //console.log(value.attr("district"));
+            var districtNameMap = value.attr("district").toString();
+            districtNameMap = districtNameMap.charAt(0).toUpperCase() +
+                districtNameMap.slice(1).toLowerCase();
+            var compareResult = result.indexOf(districtNameMap);
 
-                 if(compareResult>-1) {
-                     console.log("inside brown");
-                     value.attr("class", "brown");
-                 }
-                  else  if(result.indexOf(districtNameMap)===-1){
-                        console.log("inside white");
-                        value.attr("class","white");
-                    }
+            if (compareResult > -1) {
+                console.log("inside brown");
+                value.attr("class", "brown");
+            }
+            else if (result.indexOf(districtNameMap) === -1) {
+                console.log("inside white");
+                value.attr("class", "white");
+            }
 
-            });
+        });
 
-            //return d.district;
-        }
-
+        //return d.district;
+    }
 
 
     //mouse event handler
@@ -90,26 +89,26 @@ function createMap(nepal) {
     function mouseclick(nepal) {
 
         aboutPopup = d3.select("body #map")
-           .append("div")
+            .append("div")
             .attr("class", "popup");
 
-        var districtName = nepal.properties.DISTRICT.charAt(0).toUpperCase()+ nepal.properties.DISTRICT.slice(1).toLowerCase();
+        var districtName = nepal.properties.DISTRICT.charAt(0).toUpperCase() + nepal.properties.DISTRICT.slice(1).toLowerCase();
 
         d3.json("data/data.json", accessValue);
 
         var content;
+
         function accessValue(data) {
-            var  result = data.filter(function (d) {
-                    //console.log(d);
-                    //console.log(districtName);
-                    return d["district-name"] == districtName;
-                });
+            var result = data.filter(function (d) {
+                //console.log(d);
+                //console.log(districtName);
+                return d["district-name"] == districtName;
+            });
 
 
+            if (result.length === 0) {
 
-            if (result.length===0){
-
-                 content=
+                content =
                     "<div id='popupWrapper'>"
                     + "<div id='popupTitle'>"
                     + "<h3>Nepal Earthquake 2015</h3>"
@@ -118,50 +117,50 @@ function createMap(nepal) {
 
                     + "<div id='popupContent'>"
 
-                    +"<span class='tooltipTitle'>"
-                    + districtName+"</br>"
-                    +"</span>"
+                    + "<span class='tooltipTitle'><b>"
+                    + districtName + "</b></br>"
+                    + "</span>"
 
-                    +"<span class='tooltipColumn'>"
-                    +"No project"
-                    +"</span>"+"</br>"
+                    + "<span class='tooltipColumn'>"
+                    + "No project"
+                    + "</span>" + "</br>"
 
-                    +"<a href='https://github.com/silentflutes/map'>Source code.</a>"
                     + "</div>"
                     + "</div>"
                 ;
             }
             else {
-            var dName=result.map(function(d){
-                return d["district-name"];
-            });
+                var dName = result.map(function (d) {
+                    return d["district-name"];
+                });
+                console.log(dName);
 
-            var projectName=result.map(function(d){
-                return d["project-name"];
-            });
+                var projectName = result.map(function (d) {
+                    return d["project-name"];
+                });
 
-            var info=result.map(function(d){
-                return d["info"];
-            });
+                var info = result.map(function (d) {
+                    return d["info"];
+                });
 
-            var unAgencies=result.map(function(d){
-                return d["un-agencies"];
-            });
+                var unAgencies = result.map(function (d) {
+                    return d["un-agencies"];
+                });
 
-            var startDate= result.map(function(d){
-                return d["start-date"];
-            });
+                var startDate = result.map(function (d) {
+                    return d["start-date"];
+                });
 
-            var endDate=result.map(function(d){
-                return d["end-date"];
-            });
+                var endDate = result.map(function (d) {
+                    return d["end-date"];
+                });
 
-            var budget=result.map(function(d){
-                return d["budget"];
-            });
+                var budget = result.map(function (d) {
+                    return d["budget"];
+                });
 
 
-                 content=
+                content =
                     "<div id='popupWrapper'>"
                     + "<div id='popupTitle'>"
 
@@ -171,50 +170,63 @@ function createMap(nepal) {
 
                     + "<div id='popupContent'>"
 
-                    + "<span class='tooltipTitle'>"
-                    + districtName+"</br>"
+                        /* + "<span id='tooltipColumn'>"
+                         + "<b>District Name: </b>"
+                         + "</span>"*/
+                    + "<span class='tooltipDistrictName'><b>"
+                    + districtName + "</b></br></br>"
                     + "</span>"
+                ;
 
-                    + "<span id='tooltipColumn'>"
-                    + "Project Name:"
-                    + "</span>"
+                dName.forEach(function (d, i) {
+                    content = content
+                        + "<span id='tooltipColumn'>"
+                        + "<b>Project Name: </b>"
+                        + "</span>"
 
-                    + "<span id='tooltipColumn'>"
-                    + projectName+"</br>"
+                        + "<span id='tooltipColumn'>"
+                        + projectName[i] + "</br>"
+                        + "</span>"
 
-                    + "<span id='tooltipColumn'>"
-                    + "Information:"
-                    + "</span>"
-                    + "<span id='tooltipColumn'>"
-                    + info+"</br>"
+                        + "<span id='tooltipColumn'>"
+                        + "<b>Information: </b>"
+                        + "</span>"
+                        + "<span id='tooltipColumn'>"
+                        + info[i] + "</br>"
+                        + "</span>"
 
-                    + "<span id='tooltipColumn'>"
-                    + "UN Agencies:"
-                    + "</span>"
-                    + "<span id='tooltipColumn'>"
-                    + unAgencies+"</br>"
+                        + "<span id='tooltipColumn'>"
+                        + "<b>UN Agencies: </b>"
+                        + "</span>"
+                        + "<span id='tooltipColumn'>"
+                        + unAgencies[i] + "</br>"
+                        + "</span>"
 
-                    + "<span id='tooltipColumn'>"
-                    + "Start Date:"
-                    + "</span>"
-                    + "<span id='tooltipColumn'>"
-                    + startDate+"</br>"
+                        + "<span id='tooltipColumn'>"
+                        + "<b>Start Date: </b>"
+                        + "</span>"
+                        + "<span id='tooltipColumn'>"
+                        + startDate[i] + "</br>"
+                        + "</span>"
 
+                        + "<span id='tooltipColumn'>"
+                        + "<b>End Date: </b>"
+                        + "</span>"
+                        + "<span id='tooltipColumn'>"
+                        + endDate[i] + "</br>"
+                        + "</span>"
 
-                    + "<span id='tooltipColumn'>"
-                    + "End Date:"
-                    + "</span>"
-                    + "<span id='tooltipColumn'>"
-                    + endDate+"</br>"
-
-                    + "<span id='tooltipColumn'>"
-                    + "Budget"
-                    + "</span>"
-                    + "<span id='tooltipColumn'>"
-                    + budget+"</br>"
-
-                    + "<a href='https://github.com/silentflutes/map'>Source code.</a>"
-
+                        + "<span id='tooltipColumn'>"
+                        + "<b>Budget: </b>"
+                        + "</span>"
+                        + "<span id='tooltipColumn'>"
+                        + budget[i] + "</br>"
+                        + "</span>"
+                    ;
+                if (i < dName.length - 1)
+                    content = content + "<hr>";
+            });
+                content = content
                     + "</div>"
                     + "</div>"
                 ;
@@ -222,15 +234,13 @@ function createMap(nepal) {
 
             aboutPopup.html(content);
 
-           //console.log(dName);
+            //console.log(dName);
         }
     };
 
 
-
-
     function mouseover(nepal) {
-        var districtName = nepal.properties.DISTRICT.charAt(0).toUpperCase()+ nepal.properties.DISTRICT.slice(1).toLowerCase();
+        var districtName = nepal.properties.DISTRICT.charAt(0).toUpperCase() + nepal.properties.DISTRICT.slice(1).toLowerCase();
         var absoluteMousePos = d3.mouse(bodyNode);
         toolTipDiv = d3.select("body")
             .append("div")
@@ -238,20 +248,21 @@ function createMap(nepal) {
         ;
         //no need to display on mouse over
     }
+
     function mousemove(nepal) {
-        var districtName = nepal.properties.DISTRICT.charAt(0).toUpperCase()+ nepal.properties.DISTRICT.slice(1).toLowerCase();
+        var districtName = nepal.properties.DISTRICT.charAt(0).toUpperCase() + nepal.properties.DISTRICT.slice(1).toLowerCase();
         var absoluteMousePos = d3.mouse(bodyNode);
 
-            toolTipDiv
-                .style("opacity", 1)
-                .style('left', (absoluteMousePos[0]) + 'px')
-                .style('top', (absoluteMousePos[1]) + 'px')
-                .style('z-index', 1001)
-                //.text(d3.event.pageX + ", " + selectedDistrict.properties.DISTRICT +","+ d3.event.pageY)
-                .html("<span class='tooltipTitle'>" + districtName
-                +"<span class='tooltipValue'>"
-                 + "</span>"
-            );
+        toolTipDiv
+            .style("opacity", 1)
+            .style('left', (absoluteMousePos[0]) + 'px')
+            .style('top', (absoluteMousePos[1]) + 'px')
+            .style('z-index', 1001)
+            //.text(d3.event.pageX + ", " + selectedDistrict.properties.DISTRICT +","+ d3.event.pageY)
+            .html("<span class='tooltipTitle'>" + districtName
+            + "<span class='tooltipValue'>"
+            + "</span>"
+        );
 
     }
 
